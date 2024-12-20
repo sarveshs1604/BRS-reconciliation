@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconciliation Results</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        caption {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .message {
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reconciliation Results</h1>
+
+        <!-- Unmatched Rows in File 1 -->
+        <table>
+            <caption>Open Items In Bank Books</caption>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Date</th>
+                    <th>Credit</th>
+                    <th>Debit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if unmatched_in_file1 %}
+                    {% for row in unmatched_in_file1 %}
+                        <tr>
+                            <td>{{ forloop.counter}}</td>
+                            <td>{{ row.Date }}</td>
+                            <td>{{ row.Credit|default:'' }}</td>
+                            <td>{{ row.Debit|default:'' }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">No unmatched rows in File 1.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <!-- Unmatched Rows in File 2 -->
+        <table>
+            <caption>Open Items In Customer Books</caption>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Date</th>
+                    <th>Credit</th>
+                    <th>Debit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if unmatched_in_file2 %}
+                    {% for row in unmatched_in_file2 %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ row.Date }}</td>
+                            <td>{{ row.Credit|default:'' }}</td>
+                            <td>{{ row.Debit|default:'' }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">No unmatched rows in File 2.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <a href="/">Go Back to Upload</a>
+    </div>
+</body>
+</html>
